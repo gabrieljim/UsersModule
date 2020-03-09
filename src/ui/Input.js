@@ -13,6 +13,17 @@ const Input = styled.input`
   font-size: 15px;
   transition: all 0.2s;
 
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px ${props => props.theme.surface} inset !important;
+  }
+
+  :-webkit-autofill {
+    -webkit-text-fill-color: ${props => props.theme.text} !important;
+  }
+
   &::placeholder {
     color: ${props => props.theme.placeholder};
   }
