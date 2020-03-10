@@ -35,7 +35,15 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
     align-items: center;
     font-family: Roboto, sans-serif;
-    color: ${props => props.theme.text}
+    color: ${props => props.theme.text};
+    margin: 20px;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    margin-bottom: 15px;
   }
 `;
 
