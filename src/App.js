@@ -3,23 +3,22 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Link,
   Redirect
 } from "react-router-dom";
+import dotenv from "dotenv";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import Auth from "./routes/Auth";
-
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import Dashboard from "./routes/Dashboard";
 
 import Theme from "./constants/Theme";
 
-import Dashboard from "./routes/Dashboard";
-
 const isLoggedIn = true;
+dotenv.config();
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   return isLoggedIn ? (
-    <Router>
+    <Router {...rest}>
       <Component />
     </Router>
   ) : (
@@ -46,10 +45,10 @@ function App() {
         <GlobalStyle />
         <Router>
           <Switch>
+            <ProtectedRoute exact path="/" component={Dashboard} />
             <Route path="/signin">
               <Auth />
             </Route>
-            <ProtectedRoute path="/" component={Dashboard} />
           </Switch>
         </Router>
       </ThemeProvider>

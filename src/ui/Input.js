@@ -29,7 +29,6 @@ const Input = styled.input`
   }
 
   &:focus {
-    transform: scale(1.05);
     border-bottom-color: ${props => props.theme.contrast};
   }
 `;
