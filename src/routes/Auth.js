@@ -1,30 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Field, useField } from "formik";
 import * as yup from "yup";
 
 import Input from "../ui/Input";
 import InputContainer from "../ui/InputContainer";
 import Form from "../ui/Form";
-import { Button, Submit } from "../ui/Button";
+import { Button, Submit } from "../ui/Buttons";
 import ErrorMessage from "../ui/ErrorMessage";
 import Theme from "../constants/Theme";
 
 import { Bounce } from "react-activity";
 import "react-activity/dist/react-activity.css";
 
-const handleSubmit = async data => {
-  const response = await fetch(
-    process.env.REACT_APP_SERVER + "/users/newUser",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    }
-  );
-  console.log(response);
-};
+import { Redirect } from "react-router-dom";
+
+const translateErrors = () => {};
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -62,6 +52,48 @@ const TextField = props => {
 };
 
 const Auth = () => {
+  const [login, setLogin] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  if (login) {
+    return <Redirect to="/login" />;
+  }
+
+  const translateErrors = errors => {
+    const translatedErrors = [];
+    errors.map(error => {
+      switch (error.message) {
+        case "username must be unique":
+          translatedErrors.push({ message: "Nombre de usuario existente" });
+          break;
+        case "email must be unique":
+          translatedErrors.push({ message: "Correo ya registrado" });
+          break;
+      }
+    });
+    return translatedErrors;
+  };
+
+  const handleSubmit = async data => {
+    const response = await fetch(
+      process.env.REACT_APP_SERVER + "/users/newUser",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }
+    );
+    const responseData = await response.json();
+    if (responseData.errors) {
+      setErrors(translateErrors(responseData.errors));
+      setTimeout(() => {
+        setErrors([]);
+      }, 3000);
+    }
+  };
+
   return (
     <Formik
       validateOnChange={true}
@@ -105,8 +137,16 @@ const Auth = () => {
             </div>
           ) : (
             <InputContainer>
+              {errors &&
+                errors.map(error => (
+                  <ErrorMessage key={error.message}>
+                    {error.message}
+                  </ErrorMessage>
+                ))}
               <Submit value="Registrarme" />
-              <Button type="button">Iniciar Sesión</Button>
+              <Button type="button" onClick={() => setLogin(true)}>
+                Iniciar Sesión
+              </Button>
             </InputContainer>
           )}
         </Form>

@@ -7,5 +7,5 @@ export default {
   darkerText: "#bdc3c7",
   veryDarkText: "#7f8c8d",
   contrast: "#f1c40f",
-  warning: "#e74c3ccc"
+  warning: "#e67e22"
 };

@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import Auth from "./routes/Auth";
+import Login from "./routes/Login";
 import Dashboard from "./routes/Dashboard";
 
 import Theme from "./constants/Theme";
@@ -48,6 +49,9 @@ function App() {
             <ProtectedRoute exact path="/" component={Dashboard} />
             <Route path="/signin">
               <Auth />
+            </Route>
+            <Route path="/login">
+              <Login />
             </Route>
           </Switch>
         </Router>
