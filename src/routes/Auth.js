@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { Formik, Field, useField } from "formik";
+import { Formik } from "formik";
 import * as yup from "yup";
 
-import Input from "../ui/Input";
 import InputContainer from "../ui/InputContainer";
 import Form from "../ui/Form";
 import { Button, Submit } from "../ui/Buttons";
 import ErrorMessage from "../ui/ErrorMessage";
-import Theme from "../constants/Theme";
 
 import { Bounce } from "react-activity";
 import "react-activity/dist/react-activity.css";
 
-import { Redirect } from "react-router-dom";
+import * as user from "../services/user";
+import translateErrors from "../utils/translateErrors";
 
-const translateErrors = () => {};
+import TextField from "../components/TextField";
+
+import { Redirect } from "react-router-dom";
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -36,21 +37,6 @@ const validationSchema = yup.object().shape({
     .oneOf([yup.ref("password")], "Las contraseñas no coinciden")
 });
 
-const TextField = props => {
-  const meta = useField(props)[1];
-  const error = meta.error && meta.touched;
-  return (
-    <>
-      <Field
-        style={{ borderBottomColor: error ? Theme.warning : "" }}
-        {...props}
-        as={Input}
-      />
-      {error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
-    </>
-  );
-};
-
 const Auth = () => {
   const [login, setLogin] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -59,35 +45,11 @@ const Auth = () => {
     return <Redirect to="/login" />;
   }
 
-  const translateErrors = errors => {
-    const translatedErrors = [];
-    errors.map(error => {
-      switch (error.message) {
-        case "username must be unique":
-          translatedErrors.push({ message: "Nombre de usuario existente" });
-          break;
-        case "email must be unique":
-          translatedErrors.push({ message: "Correo ya registrado" });
-          break;
-      }
-    });
-    return translatedErrors;
-  };
-
   const handleSubmit = async data => {
-    const response = await fetch(
-      process.env.REACT_APP_SERVER + "/users/newUser",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      }
-    );
-    const responseData = await response.json();
+    const responseData = await user.createUser(data);
     if (responseData.errors) {
-      setErrors(translateErrors(responseData.errors));
+      const translatedErrors = translateErrors(responseData.errors);
+      setErrors(translatedErrors);
       setTimeout(() => {
         setErrors([]);
       }, 3000);
