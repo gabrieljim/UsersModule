@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { authenticate } from "../redux/authSlice";
 
 import InputContainer from "../ui/InputContainer";
 import Form from "../ui/Form";
@@ -40,9 +42,16 @@ const validationSchema = yup.object().shape({
 const Auth = () => {
   const [login, setLogin] = useState(false);
   const [errors, setErrors] = useState([]);
+  const dispatch = useDispatch();
+
+  const authorized = useSelector(state => state.auth.isLogged);
 
   if (login) {
     return <Redirect to="/login" />;
+  }
+
+  if (authorized) {
+    return <Redirect to="/" />;
   }
 
   const handleSubmit = async data => {
@@ -54,6 +63,10 @@ const Auth = () => {
         setErrors([]);
       }, 3000);
     }
+  };
+
+  const handleLoginUser = () => {
+    dispatch(authenticate("supertoken"));
   };
 
   return (
@@ -75,6 +88,7 @@ const Auth = () => {
       {({ isSubmitting }) => (
         <Form>
           <h1>Registro</h1>
+          <button onClick={handleLoginUser}>loginlol</button>
           <InputContainer>
             <TextField
               placeholder="Nombre de Usuario"

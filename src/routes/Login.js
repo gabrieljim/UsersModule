@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
 
 import InputContainer from "../ui/InputContainer";
 import Form from "../ui/Form";
@@ -28,8 +29,14 @@ const validationSchema = yup.object().shape({
 const Login = () => {
   const [register, setRegister] = useState(false);
 
+  const authorized = useSelector(state => state.auth.isLogged);
+
   if (register) {
     return <Redirect to="/signin" />;
+  }
+
+  if (authorized) {
+    return <Redirect to="/" />;
   }
 
   return (

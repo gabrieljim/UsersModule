@@ -6,7 +6,8 @@ import {
   Redirect
 } from "react-router-dom";
 import dotenv from "dotenv";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./constants/GlobalStyle";
 
 import Auth from "./routes/Auth";
 import Login from "./routes/Login";
@@ -14,11 +15,15 @@ import Dashboard from "./routes/Dashboard";
 
 import Theme from "./constants/Theme";
 
-const isLoggedIn = true;
+import { Provider, useSelector } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./redux/authSlice";
+
 dotenv.config();
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  return isLoggedIn ? (
+  const isLogged = useSelector(state => state.auth.isLogged);
+  return isLogged ? (
     <Router {...rest}>
       <Component />
     </Router>
@@ -26,44 +31,32 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Redirect to="/signin" />
   );
 };
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: ${props => props.theme.background};
+
+const store = configureStore({
+  reducer: {
+    auth: authReducer
   }
-  .App {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Roboto, sans-serif;
-    color: ${props => props.theme.text};
-    margin: 20px;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-  }
-  h1 {
-    margin-bottom: 15px;
-  }
-`;
+});
 
 function App() {
   return (
     <div className="App">
-      <ThemeProvider theme={Theme}>
-        <GlobalStyle />
-        <Router>
-          <Switch>
-            <ProtectedRoute exact path="/" component={Dashboard} />
-            <Route path="/signin">
-              <Auth />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-          </Switch>
-        </Router>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={Theme}>
+          <GlobalStyle />
+          <Router>
+            <Switch>
+              <ProtectedRoute exact path="/" component={Dashboard} />
+              <Route path="/signin">
+                <Auth />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+            </Switch>
+          </Router>
+        </ThemeProvider>
+      </Provider>
     </div>
   );
 }
