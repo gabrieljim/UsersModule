@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+				"ui": "./src/ui",
+				"components": "./src/components",
+				"hooks": "./src/hooks",
+				"screens": "./src/screens",
+				"store": "./src/redux",
+				"constants": "./src/constants",
+				"services": "./src/services",
+				"utils": "./src/utils"
+      }
+    }]
+  ]
+}
+

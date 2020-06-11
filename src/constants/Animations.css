@@ -1,0 +1,44 @@
+/*
+  Routes animations
+*/
+.routes-enter {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.routes-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.3s;
+}
+
+.routes-exit {
+  position: absolute;
+  opacity: 0;
+}
+
+.routes-exit-active {
+  opacity: 0;
+}
+
+/*
+  Dashboard animations
+*/
+.content-enter {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.content-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.2s;
+}
+
+.content-exit {
+  opacity: 0;
+}
+
+.content-exit-active {
+  opacity: 0;
+}
