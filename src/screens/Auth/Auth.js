@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FormikForm from "components/FormikForm";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticate } from "redux/authSlice";
+import { authenticate } from "store/authSlice";
 
 import InputContainer from "ui/InputContainer";
 import { ThemedLink } from "ui/Links";

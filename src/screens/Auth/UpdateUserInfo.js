@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import FormikForm from "../components/FormikForm";
-import * as userServices from "../services/user";
+import FormikForm from "components/FormikForm";
+import * as userServices from "services/user";
 import * as yup from "yup";
-import TextField from "../components/TextField";
-import InputContainer from "../ui/InputContainer";
-import { Button } from "../ui/Buttons";
+import TextField from "components/TextField";
+import InputContainer from "ui/InputContainer";
+import { Button } from "ui/Buttons";
 import { Redirect } from "react-router-dom";
 
 const UpdateUserInfo = props => {

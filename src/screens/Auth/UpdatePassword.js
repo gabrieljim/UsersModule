@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import * as yup from "yup";
 import { Redirect, useParams } from "react-router-dom";
 
-import * as user from "../services/user";
+import * as user from "services/user";
 
-import FormikForm from "../components/FormikForm";
-import TextField from "../components/TextField";
-import InputContainer from "../ui/InputContainer";
+import FormikForm from "components/FormikForm";
+import TextField from "components/TextField";
+import InputContainer from "ui/InputContainer";
 
 const validationSchema = yup.object().shape({
   password: yup
@@ -34,7 +34,7 @@ const RecoverPassword = () => {
     if (responseData.error) {
       setErrors([{ message: responseData.error }]);
     } else {
-      setRedirectToLogin(true);
+     // setRedirectToLogin(true);
     }
   };
 

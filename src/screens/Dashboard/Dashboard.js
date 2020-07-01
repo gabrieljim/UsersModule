@@ -4,14 +4,14 @@ import styled from "styled-components";
 import { FaUserAlt, FaHome } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { Route, Link, Switch, useLocation } from "react-router-dom";
-import "../constants/Animations.css";
+import "constants/Animations.css";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useDispatch } from "react-redux";
-import { logout } from "../redux/authSlice";
+import { logout } from "store/authSlice";
 
-import Home from "./Home";
-import Users from "./Users";
-import NewUser from "./NewUser";
+import Home from "./screens/Home";
+import Users from "./screens/Users";
+import NewUser from "./screens/NewUser";
 
 const Dashboard = () => {
   const dispatch = useDispatch();

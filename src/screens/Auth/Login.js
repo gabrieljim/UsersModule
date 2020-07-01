@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import FormikForm from "../components/FormikForm";
+import FormikForm from "components/FormikForm";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticate } from "../redux/authSlice";
+import { authenticate } from "store/authSlice";
 
-import InputContainer from "../ui/InputContainer";
-import { ThemedLink, DarkLink } from "../ui/Links";
-import SmallText from "../ui/SmallText";
+import InputContainer from "ui/InputContainer";
+import { ThemedLink, DarkLink } from "ui/Links";
+import SmallText from "ui/SmallText";
 
-import * as user from "../services/user";
+import * as user from "services/user";
 
 import { Redirect } from "react-router-dom";
 
-import TextField from "../components/TextField";
+import TextField from "components/TextField";
 
 const validationSchema = yup.object().shape({
   username: yup.string().required("El nombre de usuario es obligatorio"),

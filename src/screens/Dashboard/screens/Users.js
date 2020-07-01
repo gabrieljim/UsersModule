@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import * as user from "../services/user";
+import * as user from "services/user";
 
-import Table from "../components/Table";
-import UpdateUserInfo from "./UpdateUserInfo";
-import "../constants/Animations.css";
+import Table from "components/Table";
+import UpdateUserInfo from "screens/Auth/UpdateUserInfo";
+import "constants/Animations.css";
 
 const Users = () => {
   const [users, setUsers] = useState(false);

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import FormikForm from "../components/FormikForm";
-import InputContainer from "../ui/InputContainer";
-import TextField from "../components/TextField";
+import FormikForm from "components/FormikForm";
+import InputContainer from "ui/InputContainer";
+import TextField from "components/TextField";
 import * as yup from "yup";
-import * as user from "../services/user";
+import * as user from "services/user";
 import { Redirect } from "react-router-dom";
 
-import translateErrors from "../utils/translateErrors";
+import translateErrors from "utils/translateErrors";
 
 const validationSchema = yup.object().shape({
   username: yup
