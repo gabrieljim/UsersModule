@@ -34,7 +34,7 @@ const RecoverPassword = () => {
     if (responseData.error) {
       setErrors([{ message: responseData.error }]);
     } else {
-     // setRedirectToLogin(true);
+     setRedirectToLogin(true);
     }
   };
 

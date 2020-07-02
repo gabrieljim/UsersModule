@@ -4,9 +4,8 @@ import InputContainer from "ui/InputContainer";
 import TextField from "components/TextField";
 import * as yup from "yup";
 import * as user from "services/user";
+import styled from "styled-components";
 import { Redirect } from "react-router-dom";
-
-import translateErrors from "utils/translateErrors";
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -30,25 +29,24 @@ const validationSchema = yup.object().shape({
 
 const NewUser = () => {
   const [redirectToUsers, setRedirectToUsers] = useState(false);
-  const [errors, setErrors] = useState([]);
+	const [error, setError] = useState();
 
   const handleSubmit = async (data, setSubmitting) => {
     const responseData = await user.createUser(data);
     setSubmitting(false);
-    if (responseData.errors) {
-      const translatedErrors = translateErrors(responseData.errors);
-      setErrors(translatedErrors);
+    if (responseData.error) {
+      setError(responseData.error);
     } else {
       setRedirectToUsers(true);
     }
   };
 
   if (redirectToUsers) {
-    return <Redirect to="/dashboard/users" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (
-    <FormikForm
+    <Form
       title="Crear Usuario"
       initialValues={{
         username: "",
@@ -58,9 +56,8 @@ const NewUser = () => {
       }}
       handleSubmit={handleSubmit}
       validationSchema={validationSchema}
-      errors={errors}
+      error={error}
       submitName="Crear"
-      style={{ width: "70%" }}
     >
       <InputContainer>
         <TextField
@@ -76,8 +73,16 @@ const NewUser = () => {
           type="password"
         />
       </InputContainer>
-    </FormikForm>
+    </Form>
   );
 };
+
+const Form = styled(FormikForm)`
+	width: 70%;
+
+	@media (max-width: 768px) {
+		width: 100%;
+	}
+`
 
 export default NewUser;

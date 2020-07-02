@@ -20,7 +20,7 @@ const validationSchema = yup.object().shape({
 });
 
 const Login = () => {
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState();
   const serverError = useSelector(state => state.auth.error);
 
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Login = () => {
     const responseData = await user.logUserIn(data);
     setSubmitting(false);
     if (responseData.error) {
-      setErrors([{ message: responseData.error }]);
+      setError(responseData.error);
     } else {
       dispatch(
         authenticate({ user: responseData.user, token: responseData.token })
@@ -63,7 +63,7 @@ const Login = () => {
       }}
       validationSchema={validationSchema}
       extraButtons={extraButtons}
-      errors={errors}
+      error={error}
       handleSubmit={handleSubmit}
       serverError={serverError}
       submitName="Iniciar sesión"

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Usuarios",
+  "name": "Módulo de Usuarios",
   "icons": [
     {
       "src": "favicon.ico",

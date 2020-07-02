@@ -14,7 +14,7 @@ const CustomForm = styled(Form)`
   border: 1px solid ${props => props.theme.background};
   box-shadow: 0 0 10px #121212;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     width: 80%;
   }
 `;

@@ -9,7 +9,6 @@ import { ThemedLink } from "ui/Links";
 import SmallText from "ui/SmallText";
 
 import * as user from "services/user";
-import translateErrors from "utils/translateErrors";
 
 import TextField from "components/TextField";
 
@@ -36,7 +35,7 @@ const validationSchema = yup.object().shape({
 });
 
 const Auth = () => {
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState();
   const dispatch = useDispatch();
 
   const authorized = useSelector(state => state.auth.isLogged);
@@ -48,9 +47,8 @@ const Auth = () => {
   const handleSubmit = async (data, setSubmitting) => {
     const responseData = await user.register(data);
     setSubmitting(false);
-    if (responseData.errors) {
-      const translatedErrors = translateErrors(responseData.errors);
-      setErrors(translatedErrors);
+    if (responseData.error) {
+      setError(responseData.error);
     } else {
       dispatch(
         authenticate({ user: responseData.user, token: responseData.token })
@@ -80,7 +78,7 @@ const Auth = () => {
       handleSubmit={handleSubmit}
       validationSchema={validationSchema}
       extraButtons={extraButtons}
-      errors={errors}
+      error={error}
     >
       <InputContainer>
         <TextField

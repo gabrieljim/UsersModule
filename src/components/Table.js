@@ -15,8 +15,7 @@ const Table = props => {
       selector: "username",
       sortable: "true"
     },
-    { name: "Correo", selector: "email", sortable: "true" },
-    { name: "Rol", selector: "role", sortable: "true" }
+    { name: "Correo", selector: "email", sortable: "true" }
   ];
 
   createTheme("solarized", {
@@ -64,7 +63,7 @@ const Table = props => {
     <>
       <InputContainer style={{ margin: "20px auto" }}>
         <h2>
-          <ThemedLink to="/dashboard/users/newUser">Crear usuario</ThemedLink>
+          <ThemedLink to="/dashboard/newUser">Crear usuario</ThemedLink>
         </h2>
       </InputContainer>
       <Datatable

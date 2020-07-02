@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 
 import FormikForm from "components/FormikForm";
 import * as userServices from "services/user";
@@ -14,7 +15,7 @@ const UpdateUserInfo = props => {
   const { user } = props;
 
   if (done) {
-    return <Redirect to="/dashboard/users" />;
+    return <Redirect to="/dashboard" />;
   }
 
   const extraButtons = () => {
@@ -39,7 +40,7 @@ const UpdateUserInfo = props => {
   const handleSubmit = async (data, setSubmitting) => {
     const responseData = await userServices.updateUser({
       changes: data,
-      id: user.id
+      id: user._id
     });
     setSubmitting(false);
     if (responseData.updateError) {
@@ -50,7 +51,7 @@ const UpdateUserInfo = props => {
   };
 
   return (
-    <FormikForm
+    <Form
       title={`Actualizar ${user.username}`}
       initialValues={{
         username: user.username,
@@ -70,8 +71,12 @@ const UpdateUserInfo = props => {
         />
         <TextField placeholder="Correo" name="email" type="email" />
       </InputContainer>
-    </FormikForm>
+    </Form>
   );
 };
+
+const Form = styled(FormikForm)`
+	width: 100%;
+`
 
 export default UpdateUserInfo;
